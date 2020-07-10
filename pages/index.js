@@ -1,7 +1,12 @@
 import React from 'react'
 import Link from 'next/link'
+import useSWR from 'swr' // faz uma revalidação automática quando o usuário volta o foco na tela
+
+const fetcher = (...args) => fetch(...args).then(res => res.json())
 
 const Index = () => {
+    const { data, err } = useSWR('/api/get-promo', fetcher)
+
     return (
         <div>
             <p className='mt-12 text-center'>
@@ -13,9 +18,12 @@ const Index = () => {
                     <a className='bg-blue-400 px-6 py-4 font-bold rounded-lg shadow-lg hover:shadow'>Dar opinião ou sugestão</a>
                 </Link>
             </div>
-            <p className='mt-12 text-center'>
-                Mensagem do desconto
-            </p>
+            {!data && <p>Carregando...</p>}
+            {!error && data && data.showCoupon &&
+                <p className='mt-12 text-center'>
+                    {data.message}
+                </p>
+            }
         </div>
     )
 }
