@@ -19,7 +19,7 @@ const Index = () => {
                 </Link>
             </div>
             {!data && <p>Carregando...</p>}
-            {!error && data && data.showCoupon &&
+            {!err && data && data.showCoupon &&
                 <p className='mt-12 text-center'>
                     {data.message}
                 </p>
