@@ -13,6 +13,7 @@
   "license": "MIT",
   "dependencies": {
     "autoprefixer": "^9.8.4",
+    "google-spreadsheet": "^3.0.11",
     "next": "^9.4.4",
     "postcss-import": "^12.0.1",
     "react": "^16.13.1",

@@ -4,6 +4,7 @@ npm-debug.log
 package-lock.json
 test/*.log
 .next/
+credencials.json
 
 // .gitnignore
 # next.js build output
