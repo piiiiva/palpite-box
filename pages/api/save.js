@@ -26,9 +26,7 @@ export default async (req, res) => {
     let Promo = ''
 
     if (mostrarPromocaoCell.value === 'VERDADEIRO') {
-      // TODO:  Gerar cupom
-      // Código gerado baseado na data em milessegundos, bem IMPROVÁVEL que dê problema
-      Cupom = genCupom()
+      Cupom = genCupom() // Código gerado baseado na data em milessegundos, bem IMPROVÁVEL que dê problema
       Promo = textoCell.value
     }
 
@@ -41,7 +39,11 @@ export default async (req, res) => {
       'Data Preenchimento': moment().format('DD/MM/YYYY, HH:mm:ss'),
       Nota: 5
     })
-    res.end(req.body)
+    res.end(JSON.stringify({
+      showCoupon: Cupom !== '',
+      Cupom,
+      Promo
+    }))
 
   } catch (err) {
     console.log(err)
