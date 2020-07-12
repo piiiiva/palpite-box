@@ -1,8 +1,7 @@
 import { GoogleSpreadsheet } from 'google-spreadsheet'
-import credencials from '../../credencials.json'
 import moment from 'moment'
 
-const doc = new GoogleSpreadsheet('1bXi87Wwm-9bZLZ6z8L85FIOFMzreQYxFxG2XBK8W1GM')
+const doc = new GoogleSpreadsheet(process.env.SHEET_DOC_ID)
 
 const genCupom = () => {
   const code = parseInt(moment().format('YYMMDDHHmmSSSS')).toString(16).toUpperCase()
@@ -11,7 +10,10 @@ const genCupom = () => {
 
 export default async (req, res) => {
   try {
-    await doc.useServiceAccountAuth(credencials)
+    await doc.useServiceAccountAuth({
+      client_email: process.env.SHEET_CLIENT_EMAIL,
+      private_key: process.env.SHEET_PRIVATE_KEY
+    })
     await doc.loadInfo()
     const sheet = doc.sheetsByIndex[1] // selecionando segunda aba da planilha
     const data = JSON.parse(req.body)
@@ -37,7 +39,7 @@ export default async (req, res) => {
       Cupom,
       Promo,
       'Data Preenchimento': moment().format('DD/MM/YYYY, HH:mm:ss'),
-      Nota: 5
+      Nota: parseInt(data.Nota)
     })
     res.end(JSON.stringify({
       showCoupon: Cupom !== '',

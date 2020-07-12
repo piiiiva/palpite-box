@@ -1,12 +1,12 @@
 import React, { useState } from 'react'
-import Link from 'next/link'
+import PageTitle from '../components/pageTitle'
 
 const Pesquisa = () => {
   const [form, setForm] = useState({
     Nome: '',
     Email: '',
     Whatsapp: '',
-    Nota: 5
+    Nota: 0
   })
 
   const notas = [0, 1, 2, 3, 4, 5]
@@ -14,7 +14,6 @@ const Pesquisa = () => {
   const [retorno, setRetorno] = useState({})
 
   const save = async () => {
-    return 1
     try {
       const response = await fetch('/api/save', {
         method: 'POST',
@@ -40,6 +39,7 @@ const Pesquisa = () => {
 
   return (
     <div className='pt-6'>
+      <PageTitle title='Pesquisa' />
       <h1 className='text-center font-bold my-4 text-2xl'>Críticas e sugestões</h1>
       <p className='text-center mb-6'>
         O restaurante x sempre busca por atender melhorseus clientes. <br />
@@ -84,7 +84,7 @@ const Pesquisa = () => {
               return (
                 <label className='block w-1/6 text-center'>
                   {nota} <br />
-                  <input type="radio" name='Nota' value={nota} />
+                  <input type="radio" name='Nota' value={nota} onChange={handleOnChange} />
                 </label>
               )
             })
